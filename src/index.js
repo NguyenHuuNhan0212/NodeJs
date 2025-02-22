@@ -6,14 +6,17 @@ const app = express();
 const port = 3000;
 
 const route = require('./routes');
+const db = require('./config/db')
 
+//connect DB
+db.connect()
 app.use(express.static(path.join(__dirname, 'public')));
 
 app.use(
     express.urlencoded({
         extended: true,
     }),
-);
+)
 app.use(express.json());
 
 // HTTP logger
@@ -24,10 +27,10 @@ app.engine(
     engine({
         extname: '.hbs',
     }),
-);
-app.set('view engine', 'hbs');
-app.set('views', path.join(__dirname, 'resources/views'));
-console.log(__dirname);
+)
+app.set('view engine', 'hbs')
+app.set('views', path.join(__dirname, 'resources/views'))
+console.log(__dirname)
 
 // route init
 route(app);
