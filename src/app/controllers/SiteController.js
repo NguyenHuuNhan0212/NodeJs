@@ -1,15 +1,17 @@
 const Course = require('../models/Course')
-
+const { multipleMongooseToObject } = require('../../util/mongoose')
 
 class SiteController {
     //GET /news
-    async index(req, res) {
-        try {
-            const courses = await Course.find({});
-            res.json(courses);
-        } catch (err) {
-            res.status(400).json({ error: 'Error' });
-        } 
+    index(req, res, next) {
+        Course.find({})
+            .then(courses => {
+                // chú ý chỗ này do handlebar có vấn để bảo mật nên cần như vậy mới truy xuất dữ liệu
+               res.render('home', {
+                    courses: multipleMongooseToObject(courses)
+            })
+            })
+            .catch(next)
     }
     // GET /search
     search(req, res) {
