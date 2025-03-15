@@ -1,7 +1,8 @@
 <div class="mt-4">
     <div>
-        <h3>Khóa học của tôi</h3>
-        <a href="/me/trash/courses">Thùng rác</a>
+        <a href="/me/stored/courses">Danh sách khóa học</a>
+        <h3 class="mt-4">Khóa học đã xóa </h3>
+        
     </div>
     <table class="table mt-4">
         <thead>
@@ -20,17 +21,17 @@
                 <td>{{this.level}}</td>
                 <td>{{this.createdAt}}</td>
                 <td>
-                    <a class="btn btn-link" href="/courses/{{this._id}}/edit">Sửa</a>
+                    <a class="btn btn-link btn-restore" href="" data-id="{{this._id}}">Khôi phục</a>
                 </td>
                  <td>
-                    <a class="btn btn-link" href="" data-bs-toggle="modal" data-id="{{this._id}}" data-bs-target="#delete-course-modal">Xóa</a>
+                    <a class="btn btn-link" href="" data-bs-toggle="modal" data-id="{{this._id}}" data-bs-target="#delete-course-modal">Xóa vĩnh viễn</a>
                 </td>
             </tr>
 
              {{else}}   
                 <tr>
                     <td colspan="5" class="text-center">
-                        Bạn chưa đăng khóa học nào (-_-). <a href="/courses/create">Đăng khóa học</a>
+                        Thùng rác trống <a href="/me/stored/courses">Danh sách khóa học</a>
                     </td>
                 </tr>
 
@@ -57,15 +58,17 @@
   </div>
 </div>
 {{!-- Delete Form --}}
- <form method="POST" name="delete-course-form">
- </form>
+ <form method="POST" name="delete-course-form"></form>
+ <form method="POST" name="restore-course-form"></form>
+ 
 <script>
     document.addEventListener('DOMContentLoaded', function() {
         var courseId
         var deleteForm = document.forms['delete-course-form']
+         var restoreForm = document.forms['restore-course-form']
         var btnDeleteCourse = document.getElementById('btn-delete-course')
         var exampleModal = document.getElementById('delete-course-modal');
-
+        var restoreBtn = $('.btn-restore')
             exampleModal.addEventListener('show.bs.modal', function(event) {
                 var button = event.relatedTarget;
                 courseId = button.getAttribute('data-id');
@@ -75,6 +78,13 @@
             deleteForm.action = '/courses/' + courseId + '?_method=DELETE'
             deleteForm.submit();
         } 
+        restoreBtn.click(function(e){
+            e.preventDefault();
+
+            var courseId = $(this).data('id')
+            restoreForm.action = '/courses/' + courseId + '/restore?_method=PATCH'
+            restoreForm.submit()
+        })
     });
 
 </script>
