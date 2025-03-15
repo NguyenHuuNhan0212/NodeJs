@@ -1,8 +1,7 @@
 <div class="mt-4">
     <div>
-        <a href="/me/stored/courses">Danh sách khóa học</a>
-        <h3 class="mt-4">Khóa học đã xóa </h3>
-        
+        <a href="/me/stored/courses"><button type="button" class="btn btn-outline-primary">Danh sách khóa học</button></a>
+        <h3 class="mt-4">Khóa học đã xóa </h3>   
     </div>
     <table class="table mt-4">
         <thead>
@@ -21,10 +20,10 @@
                 <td>{{this.level}}</td>
                 <td>{{this.createdAt}}</td>
                 <td>
-                    <a class="btn btn-link btn-restore" href="" data-id="{{this._id}}">Khôi phục</a>
+                    <a class="btn btn-link btn-restore" href="" data-id="{{this._id}}"><i class="fa-solid fa-rotate-left icon-restore"></i></a>
                 </td>
                  <td>
-                    <a class="btn btn-link" href="" data-bs-toggle="modal" data-id="{{this._id}}" data-bs-target="#delete-course-modal">Xóa vĩnh viễn</a>
+                    <a class="btn btn-link" href="" data-bs-toggle="modal" data-id="{{this._id}}" data-bs-target="#delete-course-modal"><i class="fa-solid fa-bomb icon-destroy"></i></a>
                 </td>
             </tr>
 
@@ -48,11 +47,11 @@
         <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
       </div>
       <div class="modal-body">
-        <p>Bạn chắc chắn muốn xóa khóa học này?</p>
+        <p>Hành động này không thể khôi phục. Bạn vẫn muốn xóa khóa học này?</p>
       </div>
       <div class="modal-footer">
         <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Hủy</button>
-        <button type="button" id="btn-delete-course" class="btn btn-danger">Xóa bỏ</button>
+        <button type="button" id="btn-delete-course" class="btn btn-danger">Xóa vĩnh viễn</button>
       </div>
     </div>
   </div>
@@ -75,7 +74,7 @@
             })
             
         btnDeleteCourse.onclick = function(){
-            deleteForm.action = '/courses/' + courseId + '?_method=DELETE'
+            deleteForm.action = '/courses/' + courseId + '/force?_method=DELETE'
             deleteForm.submit();
         } 
         restoreBtn.click(function(e){

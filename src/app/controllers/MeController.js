@@ -15,7 +15,7 @@ class MeController {
    }
    // GET /me/trash/courses
    trashCourses(req, res, next){
-        Course.findDeleted({deletedAt: { $ne: null}})
+        Course.findDeleted({deleted: { $eq: true}})
             .then(courses => { 
                 res.render('me/trash-courses', {
                     courses: multipleMongooseToObject(courses)
