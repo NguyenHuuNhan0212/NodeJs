@@ -6,6 +6,7 @@ const path = require('path');
 const app = express();
 const port = 3000;
 
+const sortMiddleware = require('./app/middlewares/SortMiddleware')
 const route = require('./routes');
 const db = require('./config/db');
 
@@ -22,6 +23,8 @@ app.use(express.json());
 
 app.use(methodOverride('_method'))
 
+
+app.use(sortMiddleware)
 // HTTP logger
 //app.use(morgan('combined'));
 // template engine
@@ -30,8 +33,31 @@ app.engine(
     engine({
         extname: '.hbs',
         helpers: {
-           sum(a, b)  {return a + b}
-        }
+           sum(a, b)  {return a + b},
+           sortable(field, sort) {
+
+               const sortType = field === sort.column ? sort.type : 'default'
+               const icons = {
+                default: 'fa-elevator',
+                asc: 'fa-arrow-up-short-wide',
+                desc: 'fa-arrow-up-wide-short'
+               }
+               const types = {
+                default: 'desc',
+                asc: 'desc',
+                desc: 'asc'
+               }
+
+
+               const icon = icons[sortType]
+               const type = types[sortType]
+                return `<a href="?_sort&column=${field}&type=${type}">
+                    <i class="fa-solid ${icon}"></i>
+                </a>`
+           }
+
+        },
+
     }),
 );
 app.set('view engine', 'hbs');

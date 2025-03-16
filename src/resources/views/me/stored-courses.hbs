@@ -20,16 +20,25 @@
                 <option value="delete">Xóa</option>
             </select>
 
-            <button type="submit" class="btn btn-primary btn-sm mt-2 disabled btn-check-all-submit">Thực hiện</button>
+            <button type="submit" class="btn btn-primary btn-sm disabled btn-check-all-submit" >Thực hiện</button>
         </div>
     </div>
     <table class="table mt-4">
         <thead>
             <tr>
                 <th scope="col" colspan="2">#</th>
-                <th scope="col">Tên khóa học</th>
-                <th scope="col">Trình độ</th>
-                <th scope="col" colspan="3">Thời gian tạo</th>
+                <th scope="col">
+                    Tên khóa học
+                    {{{sortable 'name' _sort}}}
+                </th>
+                <th scope="col">
+                    Trình độ
+                    {{{sortable 'level' _sort}}}
+                </th>
+                <th scope="col" colspan="3">
+                    Thời gian tạo
+                    {{{sortable 'createdAt' _sort}}}
+                </th>
             </tr>
         </thead>
         <tbody>
@@ -88,7 +97,8 @@
     document.addEventListener('DOMContentLoaded', function() {
         var courseId
         var deleteForm = document.forms['delete-course-form']
-        var containerForm = document.forms['container-form']
+        //var containerForm = document.forms['container-form']
+        var containerForm = $('form[name="container-form"]')// no use
         var btnDeleteCourse = document.getElementById('btn-delete-course')
         var exampleModal = document.getElementById('delete-course-modal')
         var checkboxAll = $('#checkbox-all')
