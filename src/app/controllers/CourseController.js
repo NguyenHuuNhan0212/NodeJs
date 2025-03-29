@@ -20,13 +20,12 @@ class CourseController {
     store(req, res, next){
         req.body.image = `https://i.ytimg.com/vi/${req.body.videoId}/hqdefault.jpg?sqp=-oaymwEmCMQBEG5IWvKriqkDGQgBFQAAiEIYAdgBAeIBCggYEAIYBjgBQAE=&rs=AOn4CLCa7KMcmhKIoqYKn8qyKPLC3mgm8A`
         const course = new Course( req.body)
-        course.save()
-            .then(() => {
-                res.redirect(`/me/stored/courses`)
-            })
-            .catch(error => {
-                
-            })
+            course
+                .save()
+                .then(() => {
+                     res.redirect(`/me/stored/courses`)
+                })
+                .catch(next)
      }
      //Get /courses/:id/edit
      edit(req, res, next){
